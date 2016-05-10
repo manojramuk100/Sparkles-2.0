@@ -9,6 +9,14 @@
         <span th:utext="#{footer.allRights}">All Rights Reserved</span>.<br />
         <a href=""><span th:utext="#{footer.customerService}">Customer Service</span></a>
     </div>
+    <div id="blc_brand">
+        <a href="http://www.broadleafcommerce.com"  >
+            <img blc:src="@{/img/broadleaf-seal.png}" alt="Broadleaf Commerce" />
+            <h4><span th:utext="#{footer.branding.poweredByBLC}">Powered by Broadleaf Commerce</span></h4>
+            <br />
+        </a>
+        <p>&copy; <span th:utext="#{footer.branding.copyrightBLC}">Copyright 2013 Broadleaf Commerce</span><br /></p>
+    </div>
 
     <div th:remove="all">
         <!--
@@ -22,12 +30,13 @@
         -->
     </div>
     
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script th:inline="text">
         //<![CDATA[
         window.jQuery || document.write('<script src="[[@{/js/lib/jquery-1.9.1.js}]]"><\/script>');
         //]]>
     </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
     
     <blc:bundle name="lib.js" 
                 mapping-prefix="/js/"
@@ -44,6 +53,14 @@
                        checkoutOperations.js,
                        globalOnReady.js,
                        manageAccountOperations.js,
-                       reviewOperations.js" />
+                       reviewOperations.js,
+                       custom.js" />
 
 </footer>
+<a id="cartLink" class="modalcart btn-cartfab" th:href="@{/cart}">
+	<div class="relative">
+		<span class="headerCartItemsCount" th:utext="${cart.itemCount}" />
+		<i class="material-icons">shopping_basket</i>
+	</div>
+	<!--<span class="headerCartItemsCountWord" th:utext="${cart.itemCount == 1} ? #{home.item} :  #{home.items}" />-->
+ </a>

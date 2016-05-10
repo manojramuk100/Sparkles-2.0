@@ -134,9 +134,11 @@ $(function(){
                             showInCartButton(data.productId, 'wishlist');
                         } else {
                         	if(data.skuId != null) {
+                        		animateAddToCart($container);
                         		showInCartButton(data.skuId, 'cart');
                         	} else {
-                            	showInCartButton(data.productId, 'cart');
+                        		animateAddToCart($container)
+                    			showInCartButton(data.productId, 'cart');
                         	}
                         }
                         
@@ -151,6 +153,86 @@ $(function(){
         }
         return false;
     });
+    
+    // Animate addToCart
+    function animateAddToCart($container) {
+    	console.log($container);
+    	
+    	/*
+    	Add to cart fly effect with jQuery. - May 05, 2013
+    	(c) 2013 @ElmahdiMahmoud - fikra-masri.by
+    	license: http://www.opensource.org/licenses/mit-license.php
+    */   
+        var cart = $('.navCartButton');
+        var cartFab = $('.btn-cartfab');
+        var imgtodrag = $container.find('.image img').eq(0);
+        console.log(imgtodrag);
+        
+        if(imgtodrag) {
+        	var imgclone = 0;
+        	var dragCart = 0;
+        	if(cartFab.hasClass('show')) {
+        		dragCart = cartFab;
+        		imgclone = imgtodrag.clone().offset({
+        			top: imgtodrag.offset().top,
+        			left: imgtodrag.offset().left
+        		});
+        		
+        		imgclone.css({
+        			'opacity': '0.75',
+        			'position': 'absolute',
+        			'height': '100px',
+        			'weight': '100px',
+        			'z-index': '100'
+        		});
+        		
+        		imgclone.appendTo($('body'));
+        		imgclone.animate({
+                    'top': cartFab.offset().top + 10,
+                        'left': cartFab.offset().left + 10,
+                        '-webkit-border-radius': '50%',
+                        'border-radius': '50%',
+                        'width': 65,
+                        'height': 65
+                	},{
+                	duration: 1200,
+                	easing: 'easeInOutExpo'});
+        	} else {
+        		dragCart = cart;
+        		imgclone = imgtodrag.clone().offset({
+        			top: imgtodrag.offset().top,
+        			left: imgtodrag.offset().left
+        		});
+        		
+        		imgclone.css({
+        			'opacity': '0.75',
+        			'position': 'absolute',
+        			'height': '100px',
+        			'weight': '100px',
+        			'z-index': '100'
+        		});
+        		
+        		imgclone.appendTo($('body'));
+        		imgclone.animate({
+                    'top': cart.offset().top + 10,
+                        'left': cart.offset().left + 10,
+                        'width': 65,
+                        'height': 65
+                	},{
+                	duration: 'slow',
+                	easing: 'easeInOutExpo'});
+        	}
+        	
+        	var done = imgclone.animate({
+	            'width': 0,
+	                'height': 0
+	        }, function () {
+	        	//dragCart.addClass('rubberBand');
+	            $(this).detach();
+	        });
+        }
+    }
+    
 
     // Intercept update quantity operations and perform them via AJAX instead
     // This will trigger on any input with class "updateQuantity"
